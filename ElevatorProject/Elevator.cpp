@@ -22,30 +22,40 @@ int16_t Elevator::getFloorCount()
 }
 
 
-void Elevator::callElevator(int16_t floorNum, char direction)
+bool Elevator::callElevator(int16_t floorNum, char direction)
 {
-    handleElevatorCalled(floorNum, direction);
+    if (direction == '+' || direction == '-')
+    {
+		handleElevatorCalled(floorNum, direction);
+        return true;
+    }
+    else
+    {
+        std::cout << "\n*The elevator exploded*";
+        return false;
+    }
 }
 
-void Elevator::selectFloor(int16_t selectedFloor)
+bool Elevator::selectFloor(int16_t selectedFloor)
 {
-    if (selectedFloor > numUpperFloors || selectedFloor < (numBasementFloors * -1))
+    if (selectedFloor == 0 || selectedFloor > numUpperFloors || selectedFloor < (numBasementFloors * -1))
     {
-		std::cout << "\nSorry, floor " << selectedFloor << " doesn't exist! Please select a floor between 1 and " << getFloorCount() << "\n";
-        return;
+		std::cout << "\nSorry, floor " << selectedFloor << " doesn't exist! Please select a floor between -" << numBasementFloors << " and " << numUpperFloors << "\n";
+        return false;
     }
 
     handleFloorSelected(selectedFloor);
+    return true;
 }
 
 void Elevator::handleElevatorCalled(int16_t floorNum, char _direction)
 {
+    //callQueue.push_back(floorNum);
+
     if (_direction == '+')
 		direction = Direction::up;
     else if (_direction == '-')
 		direction = Direction::down;
-
-    //callQueue.push_back(floorNum);
 
     if (floorNum > currentFloor)
     {

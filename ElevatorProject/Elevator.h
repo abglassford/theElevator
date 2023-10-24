@@ -16,8 +16,8 @@ public:
     );
     ~Elevator() = default;
 
-    void selectFloor(int16_t selectedFloor);
-    void callElevator(int16_t floorNumber, char direction);
+    bool selectFloor(int16_t selectedFloor);
+    bool callElevator(int16_t floorNumber, char direction);
 
     int16_t getFloorCount();
 

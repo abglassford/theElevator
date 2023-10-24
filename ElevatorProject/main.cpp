@@ -27,11 +27,15 @@ int main()
     std::cout << "(enter \"+\" for up or \"-\" for down\n";
     std::cin >> direction;
 
-    pElevator->callElevator(initialFloor, direction);
+    bool callSucceeded = pElevator->callElevator(initialFloor, direction);
+
+    if (!callSucceeded) return 0;
 
     std::cout << "\nPlease select a floor between -" << numBasementFloors << " and " << numUpperFloors << "\n";
 
     std::cin >> selectedFloor;
 
-    pElevator->selectFloor(selectedFloor);
+    bool selectionSucceeded = pElevator->selectFloor(selectedFloor);
+
+    if (!selectionSucceeded) return 0;
 }
