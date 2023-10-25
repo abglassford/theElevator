@@ -31,7 +31,7 @@ bool Elevator::callElevator(int16_t floorNum, char direction)
     }
     else
     {
-        std::cout << "\n*The elevator exploded*";
+        std::cout << "\n*The elevator has exploded*";
         return false;
     }
 }
@@ -52,29 +52,23 @@ void Elevator::handleElevatorCalled(int16_t floorNum, char _direction)
 {
     //callQueue.push_back(floorNum);
 
-    if (_direction == '+')
-		direction = Direction::up;
-    else if (_direction == '-')
-		direction = Direction::down;
-
-    if (floorNum > currentFloor)
+    if (direction == Direction::none)
     {
-        if (direction == Direction::up)
-			moveToFloor(floorNum);
-        else
-			std::cout << "\nPlease wait for elevator to change direction";
-    }
-    else if (floorNum < currentFloor)
-    {
-        if (direction == Direction::down)
-			moveToFloor(floorNum);
-        else
-			std::cout << "\nPlease wait for elevator to change direction";
+		if (_direction == '+')
+			direction = Direction::up;
+		else if (_direction == '-')
+			direction = Direction::down;
     }
     else
     {
-		std::cout << "\nElevator is here!";
+		if (_direction == '+')
+			std::cout << "\nElevator is currently going up.";
+		else if (_direction == '-')
+			std::cout << "\nElevator is currently going down.";
     }
+
+	moveToFloor(floorNum);
+	std::cout << "\nElevator is here!";
 }
 
 void Elevator::handleFloorSelected(int16_t floorNum)
@@ -82,20 +76,23 @@ void Elevator::handleFloorSelected(int16_t floorNum)
 
     if (floorNum > currentFloor)
     {
-        if (direction == Direction::up)
-			moveToFloor(floorNum);
-        else
-			std::cout << "\nPlease wait for elevator to change direction";
+        if (direction == Direction::down)
+			std::cout << "\nElevator is currently going down."
+			          << "\nPlease wait for elevator to change direction";
+
+		moveToFloor(floorNum);
     }
     else if (floorNum < currentFloor)
     {
-        if (direction == Direction::down)
-			moveToFloor(floorNum);
-        else
-			std::cout << "\nPlease wait for elevator to change direction";
+        if (direction == Direction::up)
+			std::cout << "\nElevator is currently going up."
+			          << "\nPlease wait for elevator to change direction";
+
+		moveToFloor(floorNum);
     }
     else
     {
+		moveToFloor(floorNum);
 		std::cout << "\nElevator is here!";
     }
 
@@ -106,7 +103,7 @@ void Elevator::handleFloorSelected(int16_t floorNum)
 void Elevator::moveToFloor(int16_t selectedFloor)
 {
     currentFloor = selectedFloor;
-	std::cout << "\nElevator has arrived on floor " << currentFloor << "\n";
+	std::cout << "\nElevator has arrived on floor " << currentFloor << "\n\n";
 }
 
 //void Elevator::processQueue()
